@@ -85,17 +85,17 @@ commit ;
 -- selecting from the table :
 select * from users ;
 
--- Creation of triggers :
+/* Creation of triggers : */
 
-    -- Autoincrement id trigger
-    CREATE SEQUENCE user_id_seq START WITH 1 INCREMENT BY 1;
+-- Autoincrement id trigger
+CREATE SEQUENCE user_id_seq START WITH 1 INCREMENT BY 1;
 
-    CREATE OR REPLACE TRIGGER user_id_trigger
-    BEFORE INSERT ON users
-    FOR EACH ROW
-    BEGIN
-        SELECT user_id_seq.NEXTVAL
-        INTO :new.user_id
-        FROM dual;
-    END;
-    /
+CREATE OR REPLACE TRIGGER user_id_trigger
+BEFORE INSERT ON users
+FOR EACH ROW
+BEGIN
+     SELECT user_id_seq.NEXTVAL
+     INTO :new.user_id
+     FROM dual;
+ END;
+ /
