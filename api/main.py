@@ -26,16 +26,16 @@ def send_email():
         # Send email to user
         # Construct the message
         msg = MIMEMultipart()
-        msg['From'] = 'your_email@example.com'
-        msg['To'] = user_email
+        msg['From'] = 'ashrafkhabaradm@gmail.com'
+        msg['To'] = 'khabarachraf@gmail.com'
         msg['Subject'] = 'Test Email'
         message = 'Hello, this is a test email!'
         msg.attach(MIMEText(message))
         # Connect to the SMTP server and send the message
-        smtp_server = 'smtp.gmail.com'
+        smtp_server = 'gmail'
         smtp_port = 587
-        smtp_username = 'your_email@example.com'
-        smtp_password = 'your_email_password'
+        smtp_username = 'ashrafkhabaradm@gmail.com'
+        smtp_password = 'reygamjexgfarxfm'
         with smtplib.SMTP(smtp_server, smtp_port) as server:
             server.starttls()
             server.login(smtp_username, smtp_password)
