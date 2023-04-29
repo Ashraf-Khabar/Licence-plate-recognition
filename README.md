@@ -23,8 +23,9 @@ Folder Structure
     ├── 📝 main.py
     ├── 📁 templates
     │   ├── 📝 index.html
-    │   └── 📝 result.html
-    └── 📝 config.py`
+    │   └── 📝 users.html
+    └── 📝 script.sh
+    └── 📝 script.sql
  ```
 
 The `model` folder contains two Jupyter notebooks that were used to create the license plate detection and recognition models. The trained models are also included in the `model` folder.
