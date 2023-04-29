@@ -78,6 +78,8 @@ INSERT INTO users (user_id, user_name, user_mail, user_licence_plate, user_city,
 VALUES (32, 'Victoria Martin', 'victoriamartin@example.com', 'GH-234-HI', 'Nancy', 'Sedan');
 INSERT INTO users (user_id, user_name, user_mail, user_licence_plate, user_city, user_car_type)
 VALUES (33, 'Noah Davis', 'noahdavis@example.com', 'HI-345-IJ', 'Angers', 'Sedan');
+INSERT INTO users (user_id, user_name, user_mail, user_licence_plate, user_city, user_car_type)
+VALUES (44, 'Achraf Khabar', 'khabarachraf@example.com', 'HI-365-IJ', 'Angers', 'mercedes-benz');
 
 -- Committing the transactions :
 commit ;
@@ -85,17 +87,17 @@ commit ;
 -- selecting from the table :
 select * from users ;
 
--- Creation of triggers :
+/* Creation of triggers : */
 
-    -- Autoincrement id trigger
-    CREATE SEQUENCE user_id_seq START WITH 1 INCREMENT BY 1;
+-- Autoincrement id trigger
+CREATE SEQUENCE user_id_seq START WITH 1 INCREMENT BY 1;
 
-    CREATE OR REPLACE TRIGGER user_id_trigger
-    BEFORE INSERT ON users
-    FOR EACH ROW
-    BEGIN
-        SELECT user_id_seq.NEXTVAL
-        INTO :new.user_id
-        FROM dual;
-    END;
-    /
+CREATE OR REPLACE TRIGGER user_id_trigger
+BEFORE INSERT ON users
+FOR EACH ROW
+BEGIN
+     SELECT user_id_seq.NEXTVAL
+     INTO :new.user_id
+     FROM dual;
+ END;
+ /
