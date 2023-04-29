@@ -78,6 +78,8 @@ INSERT INTO users (user_id, user_name, user_mail, user_licence_plate, user_city,
 VALUES (32, 'Victoria Martin', 'victoriamartin@example.com', 'GH-234-HI', 'Nancy', 'Sedan');
 INSERT INTO users (user_id, user_name, user_mail, user_licence_plate, user_city, user_car_type)
 VALUES (33, 'Noah Davis', 'noahdavis@example.com', 'HI-345-IJ', 'Angers', 'Sedan');
+INSERT INTO users (user_id, user_name, user_mail, user_licence_plate, user_city, user_car_type)
+VALUES (44, 'Achraf Khabar', 'khabarachraf@example.com', 'HI-365-IJ', 'Angers', 'mercedes-benz');
 
 -- Committing the transactions :
 commit ;
