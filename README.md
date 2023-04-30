@@ -8,8 +8,9 @@ Project Overview
 
 This project consists of two main folders: `model` and `api`. The `model` folder contains a deep learning model created using Python and TensorFlow for license plate detection and recognition. The `api` folder contains the main Flask API, which has several APIs. Each API renders an HTML template with an image input and then tries to fetch the license plate value from an Oracle database to send an email to the vehicle owner and the city of the license plate.
 
-<center>ASHRAF KHABAR</center>
-<img title="index" alt="Index Page" src="./source/indexPage.PNG" style="text-align: center" width="500">
+<div style="text-align: center;">
+    <img title="index" alt="Index Page" src="./source/indexPage.PNG" style="text-align: center" width="500">
+</div>
 
 Folder Structure
 ----------------
