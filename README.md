@@ -13,7 +13,6 @@ This project consists of two main folders: `model` and `api`. The `model` folder
 Folder Structure
 ----------------
 
-
 ```
 ├── 📁 model
 │   ├── 📝 License_plate_detection_model.ipynb
