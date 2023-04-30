@@ -4,7 +4,10 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+# Init the Flask API app :
 app = Flask(__name__)
+
+# Configure the ORM with the connection string for ORACLE DB :
 app.config['SQLALCHEMY_DATABASE_URI'] = 'oracle+cx_oracle://radar:radarpw@localhost:1521/orcl'
 db = SQLAlchemy(app)
 
