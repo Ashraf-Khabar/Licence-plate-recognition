@@ -42,26 +42,32 @@ class User(db.Model):
 # The POST API in order to send mails to user :
 @app.route('/send_email', methods=['POST'])
 def send_email():
-    user_email = request.form['user_email']
+    # user_email = request.form['user_email']
+    user_email = 'khabarachraf@gmail.com'
     try:
         # Send email to user
         # Construct the message
         msg = MIMEMultipart()
         msg['From'] = 'ashrafkhabaradm@gmail.com'
-        msg['To'] = 'khabarachraf@gmail.com'
+        msg['To'] = user_email
         msg['Subject'] = 'Test Email'
-        message = '''
-            <center>
+        body = f"""
+            <html>
+            <head></head>
+            <body>
                 <h1>Email from RADAR.AI</h1>
-                <p>Hello, this is a test email!<p>
-            </center>
-        '''
-        msg.attach(MIMEText(message))
+                <p>Hello,</p>
+                <p>This is a test email from RADAR.AI.</p>
+                <p>Thank you for using our service.</p>
+            </body>
+            </html>
+        """
+        msg.attach(MIMEText(body, 'html'))
         # Connect to the SMTP server and send the message
-        smtp_server = 'gmail'
-        smtp_port = 587
-        smtp_username = 'ashrafkhabaradm@gmail.com'
-        smtp_password = 'reygamjexgfarxfm'
+        smtp_server = os.getenv('SMTP_SERVER')
+        smtp_port = os.getenv('SMTP_PORT')
+        smtp_username = os.getenv('SMTP_USERNAME')
+        smtp_password = os.getenv('SMTP_PASSWORD')
         with smtplib.SMTP(smtp_server, smtp_port) as server:
             server.starttls()
             server.login(smtp_username, smtp_password)
