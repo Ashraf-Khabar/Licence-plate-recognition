@@ -52,7 +52,7 @@ def send_email():
         msg['Subject'] = 'Test Email'
         message = '''
             <center>
-                <h1>Email from RADAR:AI</h1>
+                <h1>Email from RADAR.AI</h1>
                 <p>Hello, this is a test email!<p>
             </center>
         '''
