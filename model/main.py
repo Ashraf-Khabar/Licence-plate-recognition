@@ -1,15 +1,3 @@
-import numpy as np
-
-A = np.array ([
-    [1, 2, 5],
-    [1, 9, 7],
-    [6, 7, 6]
-])
-
-B = np.array(
-    [1, 2, 9]
-)
-
-C = A.dot(B.T)
-
-print(C)
+# This is the main project, here where we can create our project, our functions, our class
+# We can use either '.ipynb' or '.py'
+# This is the project where I can create the project
