@@ -18,6 +18,7 @@ git add api
 # Commit the changes
 git commit -m "Added api directory to main branch"
 
+# Pull origin from main
 git pull origin main
 
 # Push the changes to the remote repository

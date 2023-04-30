@@ -50,7 +50,12 @@ def send_email():
         msg['From'] = 'ashrafkhabaradm@gmail.com'
         msg['To'] = 'khabarachraf@gmail.com'
         msg['Subject'] = 'Test Email'
-        message = 'Hello, this is a test email!'
+        message = '''
+            <center>
+                <h1>Email from RADAR:AI</h1>
+                <p>Hello, this is a test email!<p>
+            </center>
+        '''
         msg.attach(MIMEText(message))
         # Connect to the SMTP server and send the message
         smtp_server = 'gmail'
