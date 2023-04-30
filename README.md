@@ -39,7 +39,7 @@ Getting Started
 To get started with this project, you'll need to follow the steps below:
 
 1.  Clone the repository to your local machine.
-2.  Install the required packages by running `pip install -r requirements.txt` in your terminal.
+2.  Install the required packages by running `./requirement.sh` in your terminal.
 3.  Start the API by running `python api/main.py` in your terminal.
 4.  Access the web application by visiting `http://localhost:5000/` in your browser.
 
