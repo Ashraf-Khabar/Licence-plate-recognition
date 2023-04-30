@@ -1,7 +1,16 @@
 #!/bin/bash
 
-git checkout model   # switch to the "model" branch
-git add .          # add all changes
+# switch to the "model" branch
+git checkout model   
+
+# add all changes
+git add .    
+
+# pull origin from main
 git pull origin model
-git commit -m "Automated commit at $(date)"   # commit changes with a timestamp
-git push origin model   # push changes to the "model" branch on the remote repository
+
+# commit changes with a timestamp
+git commit -m "Automated commit at $(date)"   
+
+# push changes to the "model" branch on the remote repository
+git push origin model   
