@@ -129,8 +129,10 @@ def send_email():
             server.sendmail(smtp_username, user_email, msg.as_string())
         return jsonify({'status': 'OK'})
     except Exception as e:
-        print(e)
-        return jsonify({'status': 'Not OK'})
+        return jsonify({
+            'error': e,
+            'status': 'Not OK'
+        })
 
 
 # The get API in order to render a template named 'users.html' .
