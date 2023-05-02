@@ -16,7 +16,7 @@ git checkout model -- model/*
 git add model
 
 # Commit the changes
-git commit -m "Added model directory to main branch"
+git commit -m "$*"
 
 git pull origin main
 
