@@ -10,7 +10,7 @@ git add .
 git pull origin api
 
  # commit changes with a timestamp
-git commit -m "Automated commit at $(date)"  
+git commit -m "$*"
 
 # push changes to the "api" branch on the remote repository
 git push origin api  
