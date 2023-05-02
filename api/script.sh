@@ -16,7 +16,7 @@ git checkout api -- api/*
 git add api
 
 # Commit the changes
-git commit -m "Added api directory to main branch"
+git commit -m "$*"
 
 # Pull origin from main
 git pull origin main
