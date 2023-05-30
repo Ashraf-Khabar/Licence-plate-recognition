@@ -5,7 +5,12 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from dotenv import load_dotenv
 import os
+from werkzeug.utils import secure_filename
+from model import Model
 
+# Définir le répertoire de téléchargement des images
+UPLOAD_FOLDER = 'data'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 # Loading the file .env in order to use :
 load_dotenv()
 
@@ -39,6 +44,49 @@ class User(db.Model):
     user_car_type = db.Column(db.String(50))
 
 
+@app.route('/upload_image', methods=['POST'])
+def upload_image():
+    try:
+        # Vérifier si le fichier d'image est présent dans la demande
+        if 'image' not in request.files:
+            return jsonify({'error': 'No image file found'}), 400
+
+        image_file = request.files['image']
+
+        # Vérifier si le fichier est une image valide
+        if image_file.filename == '':
+            return jsonify({'error': 'No image selected'}), 400
+        if not allowed_file(image_file.filename):
+            return jsonify({'error': 'Invalid image format'}), 400
+
+        # Enregistrer le fichier dans le répertoire de téléchargement
+        filename = secure_filename(image_file.filename)
+        image_path = os.path.join(UPLOAD_FOLDER, filename)
+        image_file.save(image_path)
+
+        # Utiliser le modèle pour obtenir le numéro de plaque d'immatriculation
+        img_processor = Model(image_path)
+        plate_number = img_processor.get_plate_number()
+
+        # Rechercher l'utilisateur correspondant à la plaque d'immatriculation dans la base de données
+        user = User.query.filter_by(user_licence_plate=plate_number).first()
+
+        if user:
+            # Render the index.html template with the license plate number
+            return render_template('index.html', plate_number=plate_number)
+        else:
+            return render_template('index.html', plate_number="No user for this licence plate")
+    except Exception as e:
+        return render_template('index.html', plate_number=e)
+
+
+
+# Vérifier si l'extension de fichier est autorisée
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+           
+           
 # The POST API in order to send mails to user :
 @app.route('/send_email', methods=['POST'])
 def send_email():
@@ -52,69 +100,6 @@ def send_email():
         msg['To'] = user_email
         msg['Subject'] = 'Email Notification from RADAR.AI : Your vehicule is captured'
         body = """
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <meta http-equiv="X-UA-Compatible" content="ie=edge">
-                <!-- Bootstrap CSS -->
-                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy1Thrge38hDQT9Xb0a1rKGfGgpeI8U27d8xEU" crossorigin="anonymous">
-                <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-                <title>Email from RADAR.AI</title>
-                            <style>
-                body{margin-top:20px;}
-                .mail-seccess {
-                    text-align: center;
-                    background: #fff;
-                    border-top: 1px solid #eee;
-                }
-                .mail-seccess .success-inner {
-                    display: inline-block;
-                }
-                .mail-seccess .success-inner h1 {
-                    font-size: 100px;
-                    text-shadow: 3px 5px 2px #3333;
-                    color: #006DFE;
-                    font-weight: 700;
-                }
-                .mail-seccess .success-inner h1 span {
-                    display: block;
-                    font-size: 25px;
-                    color: #333;
-                    font-weight: 600;
-                    text-shadow: none;
-                    margin-top: 20px;
-                }
-                .mail-seccess .success-inner p {
-                    padding: 20px 15px;
-                }
-                .mail-seccess .success-inner .btn{
-                    color:#fff;
-                }
-            </style>
-            </head>
-            <body>
-                
-                <section class="mail-seccess section">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-6 offset-lg-3 col-12">
-                                <!-- Error Inner -->
-                                <div class="success-inner">
-                                    <h1><i class="fa fa-envelope"></i><span>This is email from RADAR.AI</span></h1>
-                                    <p>Thank you for using our service.</p>
-                                    <a href="http://localhost:5000/" class="btn btn-primary btn-lg">Go Home</a>
-                                </div>
-                                <!--/ End Error Inner -->
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-            </body>
             
         """
         msg.attach(MIMEText(body, 'html'))
