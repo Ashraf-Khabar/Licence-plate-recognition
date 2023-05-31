@@ -41,7 +41,7 @@ MAX_PLATE_RATIO = 10
 
 class Model:
     def __init__(self, image_path):
-        self.model = tf.keras.models.load_model("model.h5", custom_objects={"custom_f1score": custom_f1score })
+        self.model = tf.keras.models.load_model("api/model.h5", custom_objects={"custom_f1score": custom_f1score })
         self.image_path = image_path
         self.image = cv2.imread(self.image_path)
         self.height, self.width, self.channel = self.image.shape
@@ -372,7 +372,7 @@ class Model:
         dic = {}
         characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
         for i,c in enumerate(characters):
-            dic[i] = c
+            dic[i] = c  
 
         output = []
         for i,ch in enumerate(char): #iterating over the characters
