@@ -35,18 +35,66 @@
 </section>
 <section>
     <div style="text-align: center;">
-        <img width="500"
-             src="https://i.gaw.to/content/photos/36/61/366178_Quelle_est_la_voiture_mondiale_de_2019_Les_paris_sont_lances.jpg"
-             class="rounded mx-auto d-block"
-             alt="">
+        <img id="uploadedImage" width="500" class="rounded mx-auto d-block" alt="">
         <br>
         <div style="display: inline-block;">
-            <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04"
-                   aria-label="Upload">
-            <br/>
-            <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Validate</button>
+            <form action="/upload_image" method="post" enctype="multipart/form-data">
+                <input type="file" name="image" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" required>
+                <br/>
+                <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Validate</button>
+                <button class="btn btn-outline-secondary" id="generateButton">NEW</button>
+            </form>
         </div>
+        <br><br>
+        <div id="plateNumberContainer">
+            <h4>License Plate Number:</h4>
+            <p id="plateNumber">{{ plate_number }}</p>
+        </div>
+        <br><br>
+        
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputElement = document.getElementById('inputGroupFile04');
+            const uploadedImage = document.getElementById('uploadedImage');
+            const plateNumberContainer = document.getElementById('plateNumberContainer');
+            const plateNumberElement = document.getElementById('plateNumber');
+            const generateButton = document.getElementById('generateButton');
+
+            generateButton.addEventListener('click', () => {
+                // Generate logic here
+                console.log('Generate button clicked');
+            });
+
+            inputElement.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                const formData = new FormData();
+                formData.append('image', file);
+
+                fetch('/upload_image', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        plateNumberElement.textContent = data.message;
+                        plateNumberContainer.style.display = 'block';
+                    } else {
+                        plateNumberContainer.style.display = 'none';
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+                
+                // Display the uploaded image
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    uploadedImage.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+    </script>
 </section>
 </body>
 </html>
