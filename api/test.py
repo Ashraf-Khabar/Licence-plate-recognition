@@ -1,6 +1,6 @@
 from model import Model
 
-img_processor = Model("data/test5.jpg")
+img_processor = Model("data/test2.png")
 
 print (f"the license plate number is: {img_processor.get_plate_number()}")
 

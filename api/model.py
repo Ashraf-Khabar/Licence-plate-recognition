@@ -1,11 +1,11 @@
 import os
 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
-from PIL import Image
+# import matplotlib.pyplot as plt
+# from PIL import Image
 import tensorflow as tf
 from sklearn.metrics import f1_score 
-from keras.models import Sequential,model_from_json
+from keras.models import model_from_json
 
 
 def load_keras_model(model_name):
@@ -154,7 +154,7 @@ class Model:
             for d4 in contour_list:
                 if d4['idx'] not in matched_contours_idx:
                     unmatched_contour_idx.append(d4['idx'])
-
+            unmatched_contour_idx = [x for x in unmatched_contour_idx if x < len(contour_list)]
             unmatched_contour = np.take(contour_list, unmatched_contour_idx)
             
             # recursive
@@ -167,7 +167,11 @@ class Model:
 
         matched_result = []
         for idx_list in matched_result_idx:
-            matched_result.append(np.take(contour_list, idx_list))
+            try:
+                idx_list = [x['idx'] for x in idx_list if x['idx'] < len(contour_list)]
+            except TypeError:
+                idx_list = [x for x in idx_list if x < len(contour_list)]
+                matched_result.append(np.take(contour_list, idx_list))
         return matched_result
     
     def impose_boxes(self, matched_result):
