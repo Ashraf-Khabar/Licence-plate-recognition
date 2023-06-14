@@ -15,16 +15,16 @@ Folder Structure
 
 ```
 ├── 📁 model
-│   ├── 📝 License_plate_detection_model.ipynb
-│   ├── 📝 License_plate_recognition_model.ipynb
-│   ├── 📄 license_plate_detection.h5
-│   └── 📄 license_plate_recognition.h5
+│   ├── 📝 license-plate-recognition-final.ipynb
+│   ├── 📝 model.h5
 └── 📁 api
     ├── 📝 main.py
     ├── 📁 templates
     │   ├── 📝 index.html
     │   └── 📝 users.html
     └── 📝 script.sh
+    └── 📁 data
+    │   ├── 📝 Cars1.PNG
     └── 📝 script.sql
  ```
 
