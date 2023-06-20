@@ -1,0 +1,15 @@
+email 
+smtplib 
+json 
+flask 
+flask_sqlalchemy
+wget
+tensorflow==2.5.0 
+tensorflow-gpu==2.5.0
+matplotlib
+Pillow
+pyyaml
+pytz
+protobuf
+opencv-python-headless
+tensorflowjs
