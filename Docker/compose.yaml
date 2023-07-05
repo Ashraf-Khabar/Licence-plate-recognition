@@ -1,0 +1,25 @@
+services:
+  license-plate:
+    build: .
+    working_dir: /root/
+    shm_size: '12gb'
+    stdin_open: true 
+    tty: true
+    command: "/bin/bash"
+    container_name: license-plate
+    volumes:
+      - type: bind
+        source: ../.
+        target: /license-plate
+    environment:
+      BSF_VERSION: ${BSF_VERSION}
+      WS_PATH: ${WS_PATH}
+      WS_NAME: ${WS_NAME}
+      CATDevelopmentStage: True
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
